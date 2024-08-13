@@ -21,7 +21,7 @@ from datetime import timezone
 
 import pytest
 
-from rclpy.time import CONVERSION_CONSTANT
+from rclpy.time import S_TO_NS
 
 from ros2bag_tools.time import add_daytime
 from ros2bag_tools.time import datetime_to_ros_time
@@ -59,14 +59,14 @@ def test_ros_day_time():
     t_start = date(1970, 1, 1)
     t_end = add_daytime(t_start, day_time)
     ros_t_end = datetime_to_ros_time(t_end)
-    assert (ros_t_end.nanoseconds == 60 * CONVERSION_CONSTANT)
+    assert (ros_t_end.nanoseconds == 60 * S_TO_NS)
 
     day_time = DurationOrDayTimeType('0:00:00:500')
     t_start = date(1970, 1, 2)
     t_end = add_daytime(t_start, day_time)
     ros_t_end = datetime_to_ros_time(t_end)
 
-    day_ns = 24 * 60 * 60 * CONVERSION_CONSTANT
+    day_ns = 24 * 60 * 60 * S_TO_NS
     time_ns = 500 * 1000 * 1000
     assert (ros_t_end.nanoseconds == day_ns + time_ns)
 

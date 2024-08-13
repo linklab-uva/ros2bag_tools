@@ -17,7 +17,7 @@ from diagnostic_msgs.msg import DiagnosticArray
 from example_interfaces.msg import String
 
 from rclpy.serialization import serialize_message
-from rclpy.time import CONVERSION_CONSTANT
+from rclpy.time import S_TO_NS
 from rclpy.time import Time
 
 from ros2bag_tools.filter import BagMessageTuple
@@ -42,7 +42,7 @@ def create_string_bag(path):
     msg.data = 'test_start'
     writer.write('/data', serialize_message(msg), 1000)
     msg.data = 'test_end'
-    writer.write('/data', serialize_message(msg), CONVERSION_CONSTANT + 2000)
+    writer.write('/data', serialize_message(msg), S_TO_NS + 2000)
 
 
 def create_diagnostics_bag(path):
@@ -66,7 +66,7 @@ def create_day_time_bag(path):
     topic = TopicMetadata('/data', 'example_interfaces/msg/String', 'cdr')
     writer.create_topic(topic)
 
-    HOUR_TO_NS = 60 * 60 * CONVERSION_CONSTANT
+    HOUR_TO_NS = 60 * 60 * S_TO_NS
 
     msg = String()
     msg.data = 'msg0'

@@ -21,7 +21,7 @@ from datetime import timezone
 import re
 from typing import Sequence, Tuple, Union
 
-from rclpy.time import CONVERSION_CONSTANT
+from rclpy.time import S_TO_NS
 from rclpy.time import Duration
 from rclpy.time import Time
 from rosbag2_py import BagMetadata
@@ -56,7 +56,7 @@ def get_bag_bounds(metadatas: Sequence[BagMetadata]) -> Tuple[datetime, datetime
 
 def ros_to_datetime_utc(ros_time: Time):
     (secs, nanosecs) = ros_time.seconds_nanoseconds()
-    return datetime.fromtimestamp(secs + nanosecs / CONVERSION_CONSTANT, tz=timezone.utc)
+    return datetime.fromtimestamp(secs + nanosecs / S_TO_NS, tz=timezone.utc)
 
 
 def ros_to_timedelta(duration: Duration):
